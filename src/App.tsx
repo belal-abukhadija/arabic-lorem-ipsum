@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Copy, Download, RefreshCw, Settings, FileText, Code, FileJson } from 'lucide-react';
-import { 
-  generateArabicLoremIpsum, 
-  GenerationOptions, 
-  OutputFormat, 
-  GenerationType, 
+import { Copy, Check, Download, RefreshCw } from 'lucide-react';
+import {
+  generateArabicLoremIpsum,
+  GenerationOptions,
+  OutputFormat,
+  GenerationType,
   Theme,
-  GenerationResult 
+  GenerationResult
 } from './lib/textGenerator';
 import ControlPanel from './components/ControlPanel';
 import OutputDisplay from './components/OutputDisplay';
@@ -31,7 +31,7 @@ function App() {
   const [metadata, setMetadata] = useState<GenerationResult['metadata'] | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Generate text on mount and when options change
+  // Generate text on mount
   React.useEffect(() => {
     handleGenerate();
   }, []);
@@ -76,118 +76,54 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <>
       <Header />
-      
-      <main className="container mx-auto px-4 py-8 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Control Panel - Left Side */}
-          <div className="lg:col-span-1">
-            <ControlPanel 
-              options={options} 
-              onOptionsChange={handleOptionsChange}
-            />
-          </div>
 
-          {/* Output Display - Right Side */}
-          <div className="lg:col-span-2 space-y-4">
-            {/* Stats Bar */}
+      <main className="wb-page">
+        <div className="wb-head">
+          <h1 className="wb-title">Arabic placeholder text</h1>
+          <p className="wb-lede">
+            Real Arabic sentences built from particles, conjunctions and themed vocabulary, ready to drop into a right-to-left layout.
+          </p>
+        </div>
+
+        <div className="wb-bench">
+          <ControlPanel
+            options={options}
+            onOptionsChange={handleOptionsChange}
+          />
+
+          <div className="wb-stack">
             {metadata && <StatsBar metadata={metadata} />}
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
-              <button 
-                onClick={handleGenerate}
-                className="btn-primary flex items-center gap-2"
-              >
-                <RefreshCw className="w-4 h-4" />
-                Generate New Text
+            <div className="wb-row">
+              <button onClick={handleGenerate} className="wb-btn wb-btn--primary wb-btn--lg">
+                <RefreshCw />
+                Generate text
               </button>
-              
-              <button 
-                onClick={handleCopy}
-                className="btn-secondary flex items-center gap-2"
-              >
-                <Copy className="w-4 h-4" />
-                {copied ? 'Copied!' : 'Copy to Clipboard'}
+              <button onClick={handleCopy} className="wb-btn wb-btn--lg">
+                {copied ? <Check /> : <Copy />}
+                {copied ? 'Copied' : 'Copy'}
               </button>
-              
-              <button 
-                onClick={handleDownload}
-                className="btn-outline flex items-center gap-2"
-              >
-                <Download className="w-4 h-4" />
+              <button onClick={handleDownload} className="wb-btn wb-btn--quiet wb-btn--lg">
+                <Download />
                 Download
               </button>
             </div>
 
-            {/* Output Display */}
-            <OutputDisplay 
-              text={generatedText} 
+            <OutputDisplay
+              text={generatedText}
               format={options.format}
             />
           </div>
         </div>
-
-        {/* Features Section */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="card text-center">
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-6 h-6 text-primary-600" />
-            </div>
-            <h3 className="font-semibold text-lg mb-2">Realistic Arabic</h3>
-            <p className="text-sm text-gray-600">
-              Generate grammatically structured Arabic text with proper conjunctions and particles
-            </p>
-          </div>
-
-          <div className="card text-center">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Settings className="w-6 h-6 text-purple-600" />
-            </div>
-            <h3 className="font-semibold text-lg mb-2">Highly Customizable</h3>
-            <p className="text-sm text-gray-600">
-              Control every aspect: word count, themes, punctuation, and custom keywords
-            </p>
-          </div>
-
-          <div className="card text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Code className="w-6 h-6 text-green-600" />
-            </div>
-            <h3 className="font-semibold text-lg mb-2">Multiple Formats</h3>
-            <p className="text-sm text-gray-600">
-              Export as plain text, HTML with RTL support, JSON, or Markdown
-            </p>
-          </div>
-
-          <div className="card text-center">
-            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <FileJson className="w-6 h-6 text-orange-600" />
-            </div>
-            <h3 className="font-semibold text-lg mb-2">Theme-Based</h3>
-            <p className="text-sm text-gray-600">
-              Choose from technology, UI, design, business, or general vocabularies
-            </p>
-          </div>
-        </div>
       </main>
 
-      {/* Footer */}
-      <footer className="mt-20 py-8 border-t border-gray-200">
-        <div className="container mx-auto px-4 text-center text-gray-600 text-sm">
-          <p className="text-gray-700">
-            Made with <span className="text-red-500">❤️</span> by{' '}
-            <a 
-              href="mailto:belalabukhadija97@gmail.com" 
-              className="text-primary-600 hover:text-primary-700 font-medium transition-colors"
-            >
-              Belal
-            </a>
-          </p>
-        </div>
+      <footer className="wb-foot">
+        <span>Made by <a href="mailto:belalabukhadija97@gmail.com">Belal</a></span>
+        <span>More free tools at <a href="https://belal.work" target="_blank" rel="noopener noreferrer">belal.work</a></span>
       </footer>
-    </div>
+    </>
   );
 }
 
